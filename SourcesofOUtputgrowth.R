@@ -4,16 +4,11 @@ library(ggplot2)
 library(lubridate)
 library(cowplot)
 library(gt)
-install.packages("gt")
-install.packages("kableExtra")
 library(kableExtra)
 library(gtsummary)
-install.packages("gtsummary")
-install.packages("cli")
-library(cli)
-remove.packages("cli")
 
-setwd("G:/DRIVE/LOOKING WORK/LinkedIn Posts/prod")
+
+setwd("C:/YOUR DIRECTORY/DATA")
 
 df<-read_excel("SourcesOfOutput.xlsx", sheet = "data")
 class(df)
@@ -37,22 +32,16 @@ ab<-gt(df2)%>%cols_align(align = c("center"),
     table.font.size = "smaller",
     column_labels.font.size = "small")%>%
     tab_header(title = "SOURCE OF REAL ECONOMIC GROWTH - PRIVATE NONFARM BUSINESS")%>% 
-  tab_spanner(label = html("=Labor Input<sup>*</sup>+ Capital Input<sup>*</sup> + TFP"), columns = matches("LaborC|CapitalC|MFP"))%>%
+  tab_spanner(label = html("=Labor Input<sup>*</sup>+ Capital Input<sup>*</sup> + TFP"), columns = matches("LaborC|CapitalC|TFP"))%>%
   tab_source_note(md("*Contribution points towards output growth"))%>%
   tab_source_note(md("  a: average labor cost share"))%>%
   tab_source_note(md("Source: Bureau of Labor Statistics"))%>%
-  
   tab_footnote(
     footnote = "Excludes Nonprofits, Private Households, Owner-occupied Housing, Government and Government Enterprise",
     locations = cells_column_labels(
       columns = vars(Output)
     ) )
-  
+ ab  
 
-  
+ #gtsave(ab,"SourceGDPGrowth2022.png")
 
- gtsave(ab,"SourceGDPGrowth2022.png")
- 
-plot_grid(a, ab)
-
-ggsave("wow.png")
